@@ -84,7 +84,7 @@ When `shapley_mode=True`, DataTypical reveals two views:
   Gap     │  Critical
   Fillers │  (irreplaceable)
 ──────────┼──────────────── Actual High
-  Redundant│ Replaceable
+Redundant│ Replaceable
           │  (keep one)
      Formative Low
 ```
