@@ -260,9 +260,8 @@ results = dt.fit_transform(node_features, edges=edges)
 - [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md) - Comprehensive guide to plots and interpretation
 
 **Advanced**:
-- [FORMATIVE_GUIDE.md](FORMATIVE_GUIDE.md) - Deep dive into formative instances
 - [INTERPRETATION_GUIDE.md](INTERPRETATION_GUIDE.md) - Interpreting complex patterns
-- [COMPUTATIONAL_GUIDE.md](COMPUTATIONAL_GUIDE.md) - Implementation details
+- [COMPUTATION_GUIDE.md](COMPUTATION_GUIDE.md) - Implementation details
 
 ---
 
