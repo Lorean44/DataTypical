@@ -84,7 +84,7 @@ When `shapley_mode=True`, DataTypical reveals two views:
   Gap     │  Critical
   Fillers │  (irreplaceable)
 ──────────┼──────────────── Actual High
-Redundant│ Replaceable
+Redundant │ Replaceable
           │  (keep one)
      Formative Low
 ```
@@ -371,12 +371,12 @@ Special thanks to the scientific Python community.
 
 ## Quick Links
 
-📖 [Documentation](https://github.com/amaxiom/datatypical/docs)  
-🚀 [Quick Start](#quick-start)  
-💡 [Examples](EXAMPLES.md)  
-📊 [Visualization Guide](VISUALIZATION_GUIDE.md)  
-🐛 [Report Issues](https://github.com/amaxiom/datatypical/issues)  
-💬 [Discussions](https://github.com/amaxiom/datatypical/discussions)
+[Documentation](https://github.com/amaxiom/datatypical/docs)  
+[Quick Start](#quick-start)  
+[Examples](EXAMPLES.md)  
+[Visualization Guide](VISUALIZATION_GUIDE.md)  
+[Report Issues](https://github.com/amaxiom/datatypical/issues)  
+[Discussions](https://github.com/amaxiom/datatypical/discussions)
 
 ---
 
