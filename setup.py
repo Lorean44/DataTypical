@@ -10,11 +10,11 @@ setup(
     name="datatypical",
     version="0.7.0",
     author="Amanda S. Barnard",
-    author_email="your.email@example.com",  # Update this
+    author_email="amanda.s.barnard@anu.edu.au",  # Update this
     description="Explainable instance significance discovery for scientific datasets",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/amaxiom/datatypical",
+    url="https://github.com/amaxiom/DataTypical",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
