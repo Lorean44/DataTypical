@@ -64,14 +64,21 @@ from sklearn.exceptions import ConvergenceWarning
 
 try:
     from numba import jit, prange
+    import numpy as np
+    
+    # Test if Numba actually works with the current NumPy
+    @jit(nopython=True)
+    def _test(x): return x
+    _test(np.array([1]))
+    
     NUMBA_AVAILABLE = True
-except ImportError:
+except (ImportError, Exception): 
+    # This catches the "NumPy version too new" error too!
     NUMBA_AVAILABLE = False
-    # Dummy decorator if numba not available
     def jit(*args, **kwargs):
-        def decorator(func):
-            return func
-        return decorator
+        return lambda f: f
+    def prange(n):
+        return range(n)
         
 try:
     import scipy.sparse as sp
