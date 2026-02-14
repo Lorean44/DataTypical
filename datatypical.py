@@ -2750,42 +2750,63 @@ class DataTypical:
     # ============================================================
     # Internals - Tables (numeric-only features)
     # ============================================================
-    def _select_numeric_features(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Pick numeric feature columns; auto-exclude ID-like columns."""
-        feat_df = df.select_dtypes(include=[np.number]).copy()
-        if feat_df.shape[1] == 0:
-            raise DataTypicalError("No numeric feature columns found for tabular processing.")
-    
-        n = len(feat_df)
+def _select_numeric_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Select numeric feature columns, excluding ID-like and non-informative columns.
+        
+        FIXED: Uniqueness heuristic only applied to integer/categorical columns.
+        Continuous float columns are never excluded on uniqueness grounds, as high
+        uniqueness is expected and meaningful for continuous measurements (e.g. LogP).
+        """
+        numeric_df = df.select_dtypes(include=[np.number])
+        n = len(df)
         to_drop = set()
-        for col in feat_df.columns:
-            name = str(col).lower()
-            if name == "id" or name.endswith("_id") or name.startswith("id_"):
+        
+        for col in numeric_df.columns:
+            series = numeric_df[col]
+            nunique = series.nunique()
+            
+            # Exclude columns with ID-like names
+            col_lower = col.lower()
+            if (col_lower == 'id' or
+                col_lower.endswith('_id') or
+                col_lower.startswith('id_')):
                 to_drop.add(col)
+                if self.verbose:
+                    print(f"  Dropping ID-like column: '{col}'")
                 continue
-    
-            s = feat_df[col]
-            nunique = s.nunique(dropna=True)
-    
-            # near-unique numerics behave like row IDs
-            if nunique >= 0.8 * n:
+            
+            # Exclude strictly monotonic columns (likely row indices)
+            if nunique == n:
+                vals = series.dropna().values
+                if len(vals) == n:
+                    if np.all(np.diff(vals) > 0) or np.all(np.diff(vals) < 0):
+                        to_drop.add(col)
+                        if self.verbose:
+                            print(f"  Dropping strictly monotonic column: '{col}'")
+                        continue
+            
+            # FIXED: Only apply uniqueness heuristic to integer columns
+            # Float columns are exempt - high uniqueness is expected for continuous
+            # measurements (e.g. LogP, molecular weight, solubility) and is NOT
+            # indicative of an identifier
+            is_float_col = np.issubdtype(series.dtype, np.floating)
+            
+            if not is_float_col and nunique >= 0.8 * n:
                 to_drop.add(col)
+                if self.verbose:
+                    print(f"  Dropping high-uniqueness non-float column: '{col}'")
                 continue
-    
-            # strict monotone sequence (typical of indices)
-            if n > 1:
-                diffs = np.diff(s.values).astype(float)
-                if (diffs > 0).all() or (diffs < 0).all():
-                    to_drop.add(col)
-                    continue
-    
-        feature_cols = [c for c in feat_df.columns if c not in to_drop]
+        
+        feature_cols = [c for c in numeric_df.columns if c not in to_drop]
+        
         if not feature_cols:
-            # fall back to all numeric if we dropped everything
-            feature_cols = list(feat_df.columns)
-            if self.verbose:
-                warnings.warn("All numeric columns looked like IDs; using them anyway.")
-        return feat_df[feature_cols]
+            raise DataTypicalError(
+                "No numeric feature columns remain after preprocessing. "
+                "Check label_columns and input data."
+            )
+        
+        return numeric_df[feature_cols]
 
     def _preprocess_table_fit(self, df: pd.DataFrame) -> Tuple[np.ndarray, ArrayLike]:
         # Store original df for stereotype computation
