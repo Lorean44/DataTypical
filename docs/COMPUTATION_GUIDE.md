@@ -159,7 +159,9 @@ If `label_columns` is specified, these columns are preserved but excluded from n
 Automatic selection of numeric columns with exclusion heuristics:
 
 - Columns named `id`, `*_id`, `id_*` are excluded
-- Columns with >= 80% unique values are excluded (likely identifiers)
+- Non-float columns with >= 80% unique values are excluded (likely identifiers).
+  Float columns are exempt - high uniqueness is expected for continuous measurements
+  (e.g. LogP, solubility, molecular weight).
 - Strictly monotonic columns are excluded (likely indices)
 
 ```python
